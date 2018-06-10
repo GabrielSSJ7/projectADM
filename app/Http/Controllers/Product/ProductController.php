@@ -39,12 +39,21 @@ class ProductController extends Controller
 
     public function CreateProduct(Request $request){
         $Product = new \App\Produto;
-
         $Product->nome = $request->nome;
-
         $Product->preco = $request->preco;
-
         $Product->save();
+
+        $prod_id = $Product->id;
+
+        $Stock = new \App\Stock;
+        $Stock->cod_prod = $prod_id;
+
+        if (!empty($request->qtde))
+        $Stock->qtde = $request->qtde;
+        else
+        $Stock->qtde = 0;
+
+        $Stock->save();
 
         return redirect('myproducts');
     }

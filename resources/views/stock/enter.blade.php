@@ -4,10 +4,10 @@
 
     <div class="card" style="margin: 2% auto; width: 80%;">
         <div class="card-header">
-            <strong>Saída </strong>
+            <strong>Entrada</strong>
         </div>
         <div class="card-body ">
-            <form role="form"  action="{{url("sellproduct")}}" method="post">
+            <form role="form" action="{{url("enterproduct")}}" method="post">
                 <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
                 <input type="hidden" id="cod_esto" name="cod_esto">
                 <div class="row">
@@ -38,9 +38,9 @@
     </div>
 
 
-        <div class="error">
+    <div class="error">
 
-        </div>
+    </div>
     <script src="{{asset("js/stock.js")}}"></script>
 
 @endsection

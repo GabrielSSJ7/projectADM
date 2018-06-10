@@ -37,7 +37,10 @@ Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduc
  * ===
  */
 Route::get('/outstock', ["uses" => "Stock\StockController@SellIndex"]);
+Route::get('/enterstock', ["uses" => "Stock\StockController@EnterIndex"]);
 Route::post('/getproduct', ["uses" => "Stock\StockController@getProduct"]);
+Route::post('/enterproduct', ["uses" => "Stock\StockController@enterProduct"]);
+Route::post('/sellproduct', ["uses" => "Stock\StockController@sellProduct"]);
 
 
 Auth::routes();

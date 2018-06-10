@@ -74,9 +74,15 @@
                         <label for="">Nome:</label>
                         <input type="text" class="form-control" name="nome">
                     </div>
-                    <div class="form-group">
-                        <label for="">Preço:</label>
-                        <input type="text" class="form-control" name="preco">
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <label for="">Preço:</label>
+                            <input type="text" class="form-control" name="preco">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="">Qtde:</label>
+                            <input type="text" class="form-control" name="qtde">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
