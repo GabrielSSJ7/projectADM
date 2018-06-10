@@ -11,17 +11,33 @@
 |
 */
 
-Route::get('/', ["uses"=>"UserController@home"]);
+Route::post('/login', ["as" => "user.logar", "uses" => "UserController@Login"]);
 
-Route::post('/login', ["as" => "user.logar","uses"=>"UserController@Login"]);
 
-Route::get('/dashboard', function (){
+
+Route::get('/', ["uses" => "UserController@home"]);
+Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/myproducts', ["uses"=>"Product\ProductController@index"]);
+/*=====
+ *
+ * Routes for Products
+ *
+ * =====
+ */
+Route::get('/myproducts', ["uses" => "Product\ProductController@index"]);
+Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"]);
+Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"]);
+
+
+/*=====
+ * Routes for Stock
+ * ===
+ */
+Route::get('/outstock', ["uses" => "Stock\StockController@SellIndex"]);
+
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
