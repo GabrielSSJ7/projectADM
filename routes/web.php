@@ -29,6 +29,7 @@ Route::get('/dashboard', function () {
 Route::get('/myproducts', ["uses" => "Product\ProductController@index"]);
 Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"]);
 Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"]);
+Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"]);
 
 
 /*=====
@@ -36,6 +37,7 @@ Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"])
  * ===
  */
 Route::get('/outstock', ["uses" => "Stock\StockController@SellIndex"]);
+Route::post('/getproduct', ["uses" => "Stock\StockController@getProduct"]);
 
 
 Auth::routes();

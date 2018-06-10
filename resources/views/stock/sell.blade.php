@@ -2,31 +2,44 @@
 
 @section('content')
 
-    <div class="card" style="margin: 2% auto; width: 70%;">
+    <div class="card" style="margin: 2% auto; width: 80%;">
         <div class="card-header">
-            <strong>Saída</strong>
+            <strong>Saída </strong>
         </div>
         <div class="card-body ">
-            <form role="form">
-                <div class="form-group">
-                    <label for="name">First name</label>
-                    <input type="name" class="form-control" id="fname" placeholder="Enter name">
+            <form role="form" id="sell-form" method="post">
+                <input type="hidden" value="{{csrf_token()}}" id="token">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="name">Código:</label>
+                        <input type="number" class="form-control" id="cod" name="cod">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="address">Nome:</label>
+                        <input type="address" class="form-control" id="nome" name="nome" disabled>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="qtde">Qtde:</label>
+                        <input type="number" class="form-control" id="qtde" name="qtde" >
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="qtde">Preço(R$):</label>
+                        <input type="number" class="form-control" id="preco" name="preco" disabled>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="address">Second name</label>
-                    <input type="address" class="form-control" id="sname" placeholder="Enter surname">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="pwd">Password</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-                </div>
-                <button type="submit" class="btn btn-default">Register</button>
+
+                <button style="margin-top: 2%;float: right;" type="submit" class="btn btn-outline-success">Finalizar</button>
             </form>
         </div>
     </div>
+
+
+        <div class="error">
+
+        </div>
+    <script src="{{asset("js/stock.js")}}"></script>
 
 @endsection

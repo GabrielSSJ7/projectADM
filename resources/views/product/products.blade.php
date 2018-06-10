@@ -1,6 +1,7 @@
 @extends('template.app')
 
 @section('content')
+
     <div class="row">
         @foreach($products as $product)
             <div class="col-sm-4">
@@ -21,7 +22,8 @@
                         @if(!empty($product->qtde))
                             <p class="card-text"><strong>Quantidade: </strong>{{$product->qtde}}</p>
                         @else
-                            <p class="card-text"><strong>Quantidade: </strong><span style="color: red">em falta</span>
+                            <p class="card-text"><strong>Quantidade: </strong><span
+                                    style="color: red">em falta</span>
                             </p>
                             {{--<a href="#" class="btn btn-primary">Go somewhere</a>--}}
                         @endif
@@ -30,6 +32,9 @@
             </div>
         @endforeach
     </div>
+
+
+
 
 
 

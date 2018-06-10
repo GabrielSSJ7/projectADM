@@ -36,4 +36,16 @@ class ProductController extends Controller
              $e->getMessage();
          }
     }
+
+    public function CreateProduct(Request $request){
+        $Product = new \App\Produto;
+
+        $Product->nome = $request->nome;
+
+        $Product->preco = $request->preco;
+
+        $Product->save();
+
+        return redirect('myproducts');
+    }
 }
