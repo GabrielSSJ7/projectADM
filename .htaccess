@@ -1,1 +1,1 @@
-redirect 301 /ADM/index.php http://localhost/ADM/public/dashboard
+redirect 301 /projectADM/index.php http://localhost/ADM/public/dashboard
