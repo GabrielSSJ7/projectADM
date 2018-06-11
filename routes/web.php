@@ -11,11 +11,12 @@
 |
 */
 
-Route::post('/login', ["as" => "user.logar", "uses" => "UserController@Login"]);
+Route::post('/logar', ["uses" => "UserController@Login"]);
 
 
 
 Route::get('/', ["uses" => "UserController@home"]);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 });

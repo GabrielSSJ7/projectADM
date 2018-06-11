@@ -28,7 +28,8 @@
         <div class="row" style="text-align: center">
             <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>
         </div>
-        <form action="{{url('/login')}}" method="post">
+
+        <form action="{{url('/logar')}}" method="post">
             <input type="hidden" value="{{csrf_token()}}" name="_token">
             <div class="row">
                 <div class="form-group col-sm-10 center">

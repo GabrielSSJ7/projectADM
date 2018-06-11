@@ -9,9 +9,10 @@ class UserController extends Controller
 {
     //
 
+
     public function __construct()
     {
-        //$this->middleware('auth');
+        //$this->middleware('auth:mylogin');
     }
 
     public function home()
@@ -26,19 +27,22 @@ class UserController extends Controller
 
     public function Login(Request $request)
     {
+        //dd($request->all());
 
-        $credentials = [
-            'email' => $request->get('email'),
-            'password' => $request->get('password')
-        ];
+//        if (Auth::guard('mylogin')->attempt(['email'=>$request->email, 'password'=> $request->password])){
+//            echo "Logado";
+//        }
 
-        try {
-            Auth::attempt($credentials, false);
-            return redirect('dashboard');
-        } catch (Exception $e) {
-            $e->getMessage();
+        $credentials = $request->only('email', 'password');
+
+
+
+        if (Auth::guard('mylogin')->attempt($credentials)) {
+            // Authentication passed...
+            return "Logado";
         }
 
 
+        //return redirect()->back()->withErrors(['Login inválido']);
     }
 }

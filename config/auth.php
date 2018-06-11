@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'mylogin' => [
+            'driver' => 'session',
+            'provider' => 'adm',
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -49,7 +54,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Providers
+    | Adm Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
@@ -68,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'adm' => [
+            'driver'=>'eloquent',
+            'model'=> App\Adm::class,
         ],
 
         // 'users' => [
@@ -97,6 +107,7 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+
     ],
 
 ];
