@@ -11,6 +11,8 @@ class ProductController extends Controller
     //
 
 
+
+
     public function index(){
        $produtos = DB::table('product')->leftJoin('stock','product.cod', '=', 'stock.cod_prod')
        ->get();

@@ -27,22 +27,18 @@ class UserController extends Controller
 
     public function Login(Request $request)
     {
-        //dd($request->all());
-
-//        if (Auth::guard('mylogin')->attempt(['email'=>$request->email, 'password'=> $request->password])){
-//            echo "Logado";
-//        }
-
         $credentials = $request->only('email', 'password');
+        //print_r($credentials);
 
-
-
-        if (Auth::guard('mylogin')->attempt($credentials)) {
-            // Authentication passed...
-            return "Logado";
+        if (Auth::guard('custom')->attempt($credentials)){
+            return redirect()->intended('/dashboard');
         }
 
+        return "Not logged";
+    }
 
-        //return redirect()->back()->withErrors(['Login inválido']);
+    public function logout(){
+        Auth::guard('custom')->logout();
+        return redirect("/");
     }
 }

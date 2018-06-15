@@ -24,6 +24,14 @@
         }
     </style>
 
+    @if(session('Erro'))
+    <div class="alert alert-danger" style="margin-top: 1%; ">
+        <div class="row" style="text-align: center">
+            <h5 class="col-sm-12" style="color: #4e555b">{{session('Erro')}}</h5>
+        </div>
+    </div>
+    @endif
+
     <div class="card" id="card-login" style="">
         <div class="row" style="text-align: center">
             <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>
@@ -35,6 +43,7 @@
                 <div class="form-group col-sm-10 center">
                     <label for="email">E-mail</label>
                     <input type="text" class="form-control" name="email">
+
                 </div>
                 <div class="form-group col-sm-10 center">
                     <label for="email">Senha</label>

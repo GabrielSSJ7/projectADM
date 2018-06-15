@@ -17,7 +17,7 @@ class Adm extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'lvl_ac',
+        'name', 'email',  'lvl_ac',
     ];
 
     /**

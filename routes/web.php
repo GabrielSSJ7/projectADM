@@ -16,10 +16,11 @@ Route::post('/logar', ["uses" => "UserController@Login"]);
 
 
 Route::get('/', ["uses" => "UserController@home"]);
+Route::get('/logout', ["uses" => "UserController@logout"]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-});
+})->middleware('auth:custom');
 
 /*=====
  *
@@ -27,7 +28,7 @@ Route::get('/dashboard', function () {
  *
  * =====
  */
-Route::get('/myproducts', ["uses" => "Product\ProductController@index"]);
+Route::get('/myproducts', ["uses" => "Product\ProductController@index"])->middleware('auth:custom');
 Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"]);
 Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"]);
 Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"]);
@@ -44,6 +45,8 @@ Route::post('/enterproduct', ["uses" => "Stock\StockController@enterProduct"]);
 Route::post('/sellproduct', ["uses" => "Stock\StockController@sellProduct"]);
 
 
-Auth::routes();
+Route::get('viewcadastro', ['uses'=> "RegisterController@index"]);
+Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"]);
+
 Route::get('/home', 'HomeController@index')->name('home');
 

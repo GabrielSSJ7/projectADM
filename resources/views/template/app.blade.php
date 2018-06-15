@@ -25,25 +25,42 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{url('dashboard')}}">Inicio <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('myproducts')}}">Meus produtos</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('outstock')}}">Vender</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="{{url('enterstock')}}">Entrada</a>
-            </li>
-
+            @if(\Illuminate\Support\Facades\Auth::check())
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('myproducts')}}">Meus produtos</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('outstock')}}">Vender</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{url('enterstock')}}">Entrada</a>
+                </li>
         </ul>
+            @else
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url("/viewcadastro")}}" style="cursor: pointer">Cadastrar-se</a>
+            </li>
+        </ul>
+        @endif
 
         @if(\Illuminate\Support\Facades\Request::is('myproducts'))
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar Produto</a>
+                    <a class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar
+                        Produto</a>
                 </li>
             </ul>
-        @endif
+    @endif
+
+    @if(\Illuminate\Support\Facades\Auth::guard('custom')->check())
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url("/logout")}}" style="cursor: pointer">Logout</a>
+                </li>
+            </ul>
+    @endif
 
     <!--<form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
