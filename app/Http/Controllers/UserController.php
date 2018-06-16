@@ -27,17 +27,30 @@ class UserController extends Controller
 
     public function Login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        //print_r($credentials);
+        //Definindo as regras do formulário
+        $rules = ["email"=>"required|email", "password"=>"required|min:6"];
+        //Definindo as mensagens caso o formulário seja reprovado
+        $mensagens = ['required'=> 'O campo :attribute é necessário',
+            'min'=> 'Sua senha deve conter no mínimo :min caractéres',
+            'email'=> 'Você deve digitar um email válido'];
 
+        //Validando formulário
+        $this->validate($request,$rules,$mensagens);
+
+        //Se o formulário estiver correto, definindo credenciais de acesso
+        $credentials = $request->only('email', 'password');
+
+        //Checando se o que foi digitado está no banco
         if (Auth::guard('custom')->attempt($credentials)){
+            // Se for autenticado, redirecionar para o painel
             return redirect()->intended('/dashboard');
         }
-
-        return "Not logged";
+        //Se não for autenticado, redirecionar para a página anterior.
+        return redirect()->back()->withInput(["email" => $request->email]);
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::guard('custom')->logout();
         return redirect("/");
     }

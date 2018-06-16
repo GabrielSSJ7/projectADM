@@ -37,17 +37,24 @@
             <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>
         </div>
 
-        <form action="{{url('/logar')}}" method="post">
+        <form action="{{route('login')}}" method="post">
             <input type="hidden" value="{{csrf_token()}}" name="_token">
             <div class="row">
                 <div class="form-group col-sm-10 center">
                     <label for="email">E-mail</label>
-                    <input type="text" class="form-control" name="email">
-
+                    <input type="text" class="form-control" id="inputEmail" name="email" value="{{old('email')}}">
+                    @if($errors->has('email'))
+                        <p style="color:red">{{$errors->first('email')}}</p>
+                        <style>#inputEmail{border-color:red}</style>
+                    @endif
                 </div>
                 <div class="form-group col-sm-10 center">
                     <label for="email">Senha</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" id="inputPassword" name="password">
+                    @if($errors->has('password'))
+                        <p style="color:red">{{$errors->first('password')}}</p>
+                        <style>#inputPassword{border-color:red}</style>
+                    @endif
                 </div>
                 <div class="form-group col-sm-10 center">
                     <a href="#">Esqueceu sua senha?</a>

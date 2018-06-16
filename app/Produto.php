@@ -9,7 +9,7 @@ class produto extends Model
     //
 
     protected $fillable = [
-        'cod', 'nome', 'tp_uni', 'preco',
+        'cod','cod_user', 'nome', 'tp_uni', 'preco',
     ];
 
     protected $table = 'product';

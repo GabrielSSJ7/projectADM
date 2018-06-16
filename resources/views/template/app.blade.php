@@ -27,25 +27,25 @@
             </li>
             @if(\Illuminate\Support\Facades\Auth::check())
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{url('myproducts')}}">Meus produtos</a>
+                    <a class="nav-link" href="{{route('view.produtos')}}">Meus produtos</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{url('outstock')}}">Vender</a>
+                    <a class="nav-link" href="{{route('view.saida.produto')}}">Vender</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link" href="{{url('enterstock')}}">Entrada</a>
+                    <a class="nav-link" href="{{route('view.entrada.produto')}}">Entrada</a>
                 </li>
         </ul>
             @else
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item">
-                <a class="nav-link" href="{{url("/viewcadastro")}}" style="cursor: pointer">Cadastrar-se</a>
+                <a class="nav-link" href="{{route("view.user.cadastro")}}" style="cursor: pointer">Cadastrar-se</a>
             </li>
         </ul>
         @endif
 
-        @if(\Illuminate\Support\Facades\Request::is('myproducts'))
+        @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
                     <a class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar
@@ -57,7 +57,7 @@
     @if(\Illuminate\Support\Facades\Auth::guard('custom')->check())
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{url("/logout")}}" style="cursor: pointer">Logout</a>
+                    <a class="nav-link" href="{{route("deslogar")}}" style="cursor: pointer">Logout</a>
                 </li>
             </ul>
     @endif
@@ -84,7 +84,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{url("createproduct")}}" method="post">
+            <form action="{{route("criar.produto")}}" method="post">
                 <div class="modal-body">
                     {{csrf_field()}}
                     <div class="form-group">

@@ -9,7 +9,7 @@ class Adm extends Authenticatable
 {
     use Notifiable;
 
-    protected $guard = 'mylogin';
+    protected $guard = 'custom';
 
     /**
      * The attributes that are mass assignable.

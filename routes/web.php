@@ -11,12 +11,12 @@
 |
 */
 
-Route::post('/logar', ["uses" => "UserController@Login"]);
+Route::post('/logar', ["uses" => "UserController@Login"])->name('login');
 
 
 
 Route::get('/', ["uses" => "UserController@home"]);
-Route::get('/logout', ["uses" => "UserController@logout"]);
+Route::get('/logout', ["uses" => "UserController@logout"])->name('deslogar');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,25 +28,32 @@ Route::get('/dashboard', function () {
  *
  * =====
  */
-Route::get('/myproducts', ["uses" => "Product\ProductController@index"])->middleware('auth:custom');
-Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"]);
-Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"]);
-Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"]);
+Route::get('/myproducts', ["uses" => "Product\ProductController@index"])->
+name('view.produtos')->middleware('auth:custom');
+Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"])->name('view.editar.produto');
+Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"])->name('editar.produto');
+Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"])->name('criar.produto');
 
 
 /*=====
  * Routes for Stock
  * ===
  */
-Route::get('/outstock', ["uses" => "Stock\StockController@SellIndex"]);
-Route::get('/enterstock', ["uses" => "Stock\StockController@EnterIndex"]);
-Route::post('/getproduct', ["uses" => "Stock\StockController@getProduct"]);
-Route::post('/enterproduct', ["uses" => "Stock\StockController@enterProduct"]);
-Route::post('/sellproduct', ["uses" => "Stock\StockController@sellProduct"]);
+Route::get('/outstock', ["uses" => "Stock\StockController@SellIndex"])->
+name('view.saida.produto')->middleware('auth:custom');
+Route::get('/enterstock', ["uses" => "Stock\StockController@EnterIndex"])->
+name('view.entrada.produto')->middleware('auth:custom');
+Route::post('/getproduct', ["uses" => "Stock\StockController@getProduct"])->
+name('busca.produto');
+Route::post('/enterproduct', ["uses" => "Stock\StockController@enterProduct"])->
+name('entrada.produto');
+Route::post('/sellproduct', ["uses" => "Stock\StockController@sellProduct"])->
+name('saida.produto');
+Route::get('/registroEntrada', ['uses' => "Stock\StockController@registroEntrada"])->name("registro.entrada");
 
 
-Route::get('viewcadastro', ['uses'=> "RegisterController@index"]);
-Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"]);
+Route::get('viewcadastro', ['uses'=> "RegisterController@index"])->name('view.user.cadastro');
+Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"])->name('user.cadastrar');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

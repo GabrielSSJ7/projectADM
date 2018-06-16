@@ -9,16 +9,23 @@
         <div class="card-body">
             <div class="row">
                 <div style="padding: 0 5px;" class="col-sm-2">
-                    <a href="{{url('myproducts')}}" class="btn btn-light ">
+                    <a href="{{route('view.produtos')}}" class="btn btn-light ">
                         <img src="{{asset('images/warehouse.png')}}" class="img-fluid"><br>
                         <span style="text-align: center">Meus Produtos</span>
                     </a>
                 </div>
 
                 <div style="padding: 0 5px;" class="col-sm-2">
-                    <a href="{{url('outstock')}}" class="btn btn-light ">
+                    <a href="{{route('view.saida.produto')}}" class="btn btn-light ">
                         <img src="{{asset('images/money.png')}}" class="img-fluid"><br>
                         <span style="text-align: center">Vender</span>
+                    </a>
+                </div>
+
+                <div style="padding: 0 5px;" class="col-sm-2">
+                    <a href="{{route('view.entrada.produto')}}" class="btn btn-light ">
+                        <img src="{{asset('images/barcode.png')}}" class="img-fluid"><br>
+                        <span style="text-align: center">Entrada</span>
                     </a>
                 </div>
 

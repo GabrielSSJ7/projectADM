@@ -30,12 +30,12 @@
         </div>
 
 
-        <form action="{{url('/cadastrar')}}" method="post">
+        <form action="{{route('user.cadastrar')}}" method="post">
             <input type="hidden" value="{{csrf_token()}}" name="_token">
             <div class="row">
                 <div class="form-group col-sm-10 center">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" id="inputNome" name="nome">
+                    <input type="text" class="form-control" id="inputNome" name="nome" value="{{old('nome')}}">
                     @if($errors->has('nome'))
                         <p style="color:red">{{$errors->first('nome')}}</p>
                         <style>#inputNome{border-color:red}</style>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group col-sm-10 center">
                     <label for="email">E-mail</label>
-                    <input type="text" class="form-control" id="inputEmail" name="email">
+                    <input type="text" class="form-control" id="inputEmail" name="email" value="{{old('email')}}">
                     @if($errors->has('email'))
                         <p style="color:red">{{$errors->first('email')}}</p>
                         <style>#inputEmail{border-color:red}</style>

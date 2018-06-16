@@ -16,7 +16,8 @@ class CreateSaidaTable extends Migration
         Schema::create('saida', function (Blueprint $table) {
             $table->unsignedInteger('cod_esto');
             $table->integer('qtde');
-            $table->foreign('cod_esto')->references('cod_esto')->on('stock')->onDelete('cascade');
+            $table->integer('qtde_old');
+            $table->foreign('cod_esto')->references('cod_esto')->on('stock')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -16,14 +16,13 @@ class RegisterController extends Controller
 
     public function cadastrar(Request $request)
     {
-        $mensagens = [
-          'required'=> 'O campo :attribute é necessário',
-          'min'=> 'Sua senha deve conter no mínimo :min caractéres'
-        ];
+        $mensagens = ['required'=> 'O campo :attribute é necessário',
+            'min'=> 'Sua senha deve conter no mínimo :min caractéres',
+            'email'=> 'Você deve digitar um email válido'];
 
         $this->validate($request, [
             'nome' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required|min:6'
         ], $mensagens);
 

@@ -16,8 +16,10 @@ class CreateProductTable extends Migration
         Schema::create('product', function (Blueprint $table) {
             $table->increments('cod');
             $table->string('nome');
-            $table->string('tp_uni');
+            $table->integer('cod_user')->unsigned();
+            $table->string('tp_uni')->nullable();
             $table->double('preco');
+            $table->foreign('cod_user')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

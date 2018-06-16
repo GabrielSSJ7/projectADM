@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stock;
 
+use App\Entrada;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -11,68 +12,153 @@ class StockController extends Controller
     //
     public function SellIndex()
     {
-        return view('stock.sell');
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+
+        $table = DB::table('saida')->select('nome', 'saida.created_at as data', 'saida.qtde as quantidade'
+            , 'stock.qtde as qtde_atual', 'saida.qtde_old')
+            ->join('stock', 'saida.cod_esto', '=', 'stock.cod_prod')
+            ->join('product', 'stock.cod_esto', '=', 'product.cod')
+            ->join('user', 'product.cod_user', '=', 'user.id')
+            ->orderBy('data', 'desc')->get();
+
+        return view('stock.sell', ['dados' => $table]);
     }
 
     public function EnterIndex()
     {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
 
-        return view('stock.enter');
+        $table = DB::table('entrada')->select('nome', 'entrada.created_at as data', 'entrada.qtde as quantidade',
+            'stock.qtde as qtde_atual', 'entrada.qtde_old')
+            ->join('stock', 'entrada.cod_esto', '=', 'stock.cod_prod')
+            ->join('product', 'stock.cod_esto', '=', 'product.cod')
+            ->join('user', 'product.cod_user', '=', 'user.id')
+            ->orderBy('data')->get();
+
+        return view('stock.enter', ['dados' => $table]);
     }
 
     public function getProduct(Request $request)
     {
+        //Código vindo do formulário
         $cod = $request->get('cod');
-        $response = DB::table('product')->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
+        //Buscando produto no banco baseado em seu código
+        $response = DB::table('product')
+            ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
             ->where("cod", $cod)->get();
-        $response = json_decode($response);
 
-        if (!empty($response)) {
+        //Convertendo a resposta JSON
+        $response = json_decode($response);
+        if (!empty($response))
             return response()->json([$response, ["status" => "ok"]]);
-        } else {
+        else
             return response()->json([$response, ["status" => "error"]]);
-        }
-        //return response()->json([$response, ["status"=>"ok"]]);
+
+
     }
 
     public function enterProduct(Request $request)
     {
+        //Definindo regras do formulário
+        $rules = ['qtde' => 'required'];
+
+        //Definindo mensagens de erro caso formulário seja inválido
+        $mensagens = ['required' => 'O campo :attribute é necessário'];
+
+        //Validando formulário
+        $this->validate($request, $rules, $mensagens);
+
+        //Instanciando classe entrada
         $entrada = new \App\Entrada;
 
+        //Definindo os dados passados pela requisição no modelo
         $entrada->cod_esto = $request->cod_esto;
         $entrada->qtde = $request->qtde;
 
+        //Salvando dados no banco de dados
         $entrada->save();
 
+        //Buscando o produto no estoque através do código do estoque
         $stock = DB::table('stock')->where('cod_esto', $entrada->cod_esto)->get();
 
         //dd($stock->first()->qtde);
+
         $finalQtde = $stock->first()->qtde + $entrada->qtde;
 
         DB::table('stock')->where('cod_esto', $entrada->cod_esto)->update(["qtde" => $finalQtde]);
 
-        return redirect('myproducts');
+        //Retornando status da venda
+        return redirect()->route('view.entrada.produto')->with(['status' => 'Sucesso']);
 
     }
 
     public function sellProduct(Request $request)
     {
+        //Definindo regras do formulário
+        $rules = ['qtde' => 'required'];
+
+        //Definindo mensagens de erro caso formulário seja inválido
+        $mensagens = ['required' => 'O campo :attribute é necessário'];
+
+        //Validando formulário
+        $this->validate($request, $rules, $mensagens);
+
+        // Instanciando modelo de Saída
         $saida = new \App\Saida;
 
+        //Definindo os dados passados pela requisição no modelo
         $saida->cod_esto = $request->cod_esto;
         $saida->qtde = $request->qtde;
 
-        $saida->save();
+        //Buscando o produto no estoque através do código do estoque
+        $stock = DB::table('stock')->where('cod_esto', $request->cod_esto)->get();
 
-        $stock = DB::table('stock')->where('cod_esto', $saida->cod_esto)->get();
+        //Inserindo a quantidade atual na tabela SAIDA
+        $saida->qtde_old = $stock->first()->qtde;
 
         //dd($stock->first()->qtde);
+
+        //Vendo se há produto em estoque
+        if ($stock->first()->qtde <= 0) {
+            return ['status' => "Produto em falta"];
+        }
+        //Subtraindo qtde do estoque pela qtde que definida no formulário
         $finalQtde = $stock->first()->qtde - $saida->qtde;
 
-        DB::table('stock')->where('cod_esto', $saida->cod_esto)->update(["qtde" => $finalQtde]);
+        /*if ($finalQtde < 0) {
 
-        return redirect('myproducts');
+            dd($finalQtde);
+        } else {
 
+          return  var_dump($finalQtde);
+        }*/
+
+         if ($finalQtde > 0) {
+             //Salvando dados no banco de dados na tabela SAIDA
+             $saida->save();
+
+             //Atualizando a quantidade do produto no banco de dados
+             DB::table('stock')->where('cod_esto', $saida->cod_esto)->update(["qtde" => $finalQtde]);
+
+
+             //Retornando status da venda
+             return redirect()->route('view.saida.produto')->with(['status' => 'Sucesso']);
+         }
+
+        return redirect()->route('view.saida.produto')->with(['status' => 'Você não tem produto suficiente para vender. Qtde do produto: '.$stock->first()->qtde]);
+    }
+
+
+    public function registroEntrada()
+    {
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        $table = Entrada::all();
+
+        //dd(strftime('%A, %d de %B de %Y', strtotime($table)));
+        dd($table);
     }
 
 

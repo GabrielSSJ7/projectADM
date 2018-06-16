@@ -16,7 +16,8 @@ class CreateEntradaTable extends Migration
         Schema::create('entrada', function (Blueprint $table) {
             $table->unsignedInteger('cod_esto');
             $table->integer('qtde');
-            $table->foreign('cod_esto')->references('cod_esto')->on('stock');
+            $table->integer('qtde_old');
+            $table->foreign('cod_esto')->references('cod_esto')->on('stock')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

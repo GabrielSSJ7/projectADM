@@ -17,7 +17,7 @@ class CreateStockTable extends Migration
             $table->increments('cod_esto');
             $table->integer('cod_prod')->unsigned()->unique();
             $table->integer('qtde');
-            $table->foreign('cod_prod')->references('cod')->on('product');
+            $table->foreign('cod_prod')->references('cod')->on('product')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
