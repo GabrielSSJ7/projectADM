@@ -18,6 +18,7 @@ class ProductController extends Controller
         $produtos = DB::table('product')->leftJoin('user', 'product.cod_user', '=', 'user.id')
             ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
             ->where('product.cod_user', '=', $user)->get();
+        //dd($produtos);
         return view('product.products', ['products' => $produtos]);
     }
 

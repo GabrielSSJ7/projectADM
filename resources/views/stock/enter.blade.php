@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card" style="margin: 2% auto; width: 80%;">
+    <div class="card formEntradaSaida"  style="">
         <div class="card-header">
             <strong>Entrada</strong>
         </div>
@@ -44,7 +44,7 @@
 
 
     <div class="col-sm-12" style="margin: 0 auto">
-        <table class="table table-dark table-hover">
+        <table class="table table-dark table-hover table-responsive">
             <thead>
             <tr>
                 <th>Produto</th>

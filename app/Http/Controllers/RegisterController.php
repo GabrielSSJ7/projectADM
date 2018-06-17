@@ -16,9 +16,9 @@ class RegisterController extends Controller
 
     public function cadastrar(Request $request)
     {
-        $mensagens = ['required'=> 'O campo :attribute é necessário',
-            'min'=> 'Sua senha deve conter no mínimo :min caractéres',
-            'email'=> 'Você deve digitar um email válido'];
+        $mensagens = ['required' => 'O campo :attribute é necessário',
+            'min' => 'Sua senha deve conter no mínimo :min caractéres',
+            'email' => 'Você deve digitar um email válido'];
 
         $this->validate($request, [
             'nome' => 'required',
@@ -33,8 +33,11 @@ class RegisterController extends Controller
         $admin->password = Hash::make($request->password);
         $admin->lvl_ac = 1;
 
-        $admin->save();
+        if ($admin->save()) {
+            return redirect()->route('login')->with(["status"=>"Usuário cadastrado com sucesso"]);
+        }
 
-        return redirect('/');
+        return redirect()->route('login')->withErrors(["status"=>"Não foi possível cadastrar este usuário"]);
+
     }
 }

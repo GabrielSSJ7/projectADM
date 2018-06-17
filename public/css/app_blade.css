@@ -1,0 +1,61 @@
+/*Estilização geral */
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #4e555b;
+}
+
+/* == */
+
+/* Entrada e Saida de produtos */
+
+.formEntradaSaida {
+    margin: 2% auto;
+    width: 80%;
+}
+
+@media only screen and (max-width: 800px) {
+    .formEntradaSaida {
+        width: 100%;
+    }
+}
+
+/* == */
+
+
+/* Editar produto */
+#editForm{
+    margin: 2% auto;
+    width: 50%;
+}
+@media only screen and (max-width: 800px) {
+    body{
+        background-color: #4e555b;
+    }
+    #editForm{
+        width: 100%;
+    }
+}
+/* === */
+
+
+/* Login e Cadastro */
+#card-login {
+    width: 50%;
+    margin: 10% auto;
+    padding: 10px;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 800px) {
+    #card-login {
+        width: 100%;
+    }
+}
+/* === */

@@ -3,12 +3,12 @@
 @section('content')
 
 
-    <div class="card" style="margin: 2% auto; width: 80%;">
+    <div class="card formEntradaSaida" >
         <div class="card-header">
             <strong>Saída </strong>
         </div>
         <div class="card-body ">
-            <form role="form" action="{{url("sellproduct")}}" method="post">
+            <form role="form" action="{{route("saida.produto")}}" method="post">
                 <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
                 <input type="hidden" id="cod_esto" name="cod_esto">
                 <div class="row">
@@ -49,7 +49,7 @@
         }</style>
 
     <div class="col-sm-12" style="margin: 0 auto">
-        <table class="table table-dark table-hover">
+        <table class="table table-dark table-hover table-responsive">
             <thead>
             <tr>
                 <th>Produto</th>

@@ -32,6 +32,14 @@
     </div>
     @endif
 
+    @if(session('status'))
+        <div class="alert alert-success" style="margin-top: 1%; ">
+            <div class="row" style="text-align: center">
+                <h5 class="col-sm-12" style="color: #4e555b">{{session('status')}}</h5>
+            </div>
+        </div>
+    @endif
+
     <div class="card" id="card-login" style="">
         <div class="row" style="text-align: center">
             <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>

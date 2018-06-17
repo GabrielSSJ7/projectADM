@@ -6,11 +6,7 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <style>
-        * {
-            font-family: 'Montserrat', sans-serif;
-        }
-    </style>
+    <link href="{{asset("css/app_blade.css")}}" rel="stylesheet"> </link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
@@ -24,7 +20,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{url('dashboard')}}">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('painel.principal')}}">Inicio <span class="sr-only">(current)</span></a>
             </li>
             @if(\Illuminate\Support\Facades\Auth::check())
                 <li class="nav-item ">

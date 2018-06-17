@@ -2,31 +2,13 @@
 
 @section('content')
     <style>
-        body {
-            background: #4e555b
 
-        }
 
-        #card-login {
-            width: 50%;
-            margin: 10% auto;
-            padding: 10px;
-        }
-
-        .center {
-            margin: 0 auto;
-        }
-
-        @media only screen and (max-width: 800px) {
-            #card-login {
-                width: 100%;
-            }
-        }
     </style>
 
     <div class="card" id="card-login" style="">
         <div class="row" style="text-align: center">
-            <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>
+            <h1 class="col-sm-12" style="color: #4e555b">Cadastrar</h1>
         </div>
 
 
