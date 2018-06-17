@@ -13,12 +13,21 @@
                                                                            style="float:right"><img
                                     src="{{asset('images/baseline_edit_black_18dp.png')}}">
                             </i></a>
-                        <p class="card-text"><strong>Preço: </strong>R$<?php $index = strrpos($product->preco, ".");
-                            if (count($product->preco) < $index + 1) {
-                                echo substr_replace($product->preco, "0", $index + 2);
+                        <p class="card-text"><strong>Preço: </strong>R$<?php
+                            //Vendo se possui ponto, se possuir indica que há números flutuantes
+                            $index = strrpos($product->preco, ".");
+                            if (isset($index) && !empty($index)) {
+                                $product_float_lenght = strlen(substr($product->preco, strrpos($product->preco, ".") + 1));
+                                if ($product_float_lenght  == 1) {
+                                    echo substr_replace($product->preco, "0", $index + 2);
+                                } else {
+                                    echo $product->preco;
+                                }
                             } else {
                                 echo $product->preco . ".00";
-                            } ?></p>
+                            }
+                            ?></p>
+
                         @if(!empty($product->qtde))
                             <p class="card-text"><strong>Quantidade: </strong>{{$product->qtde}}</p>
                         @else

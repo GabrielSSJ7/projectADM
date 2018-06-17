@@ -49,7 +49,7 @@
             <tr>
                 <th>Produto</th>
                 <th>Data</th>
-                <th>Qtde</th>
+                <th>Qtde entrada</th>
                 <th>Qtde na data</th>
                 <th>Qtde atual</th>
             </tr>
@@ -59,7 +59,7 @@
                 <tr>
                     {{--{{strftime('%A, %d de %B de %Y - %H:%mhrs', strtotime($dado->created_at))}}--}}
                     <th>{{$dado->nome}}</th>
-                    <th>{{trim(strftime("%d de %B de %Y às %H:%Mhrs",strtotime($dado->data)))}}</th>
+                    <th>{{strftime("%d de %B de %Y às %R",strtotime($dado->data))}}</th>
                     <th>{{$dado->quantidade}}</th>
                     <th>{{$dado->qtde_old}}</th>
                     <th>{{$dado->qtde_atual}}</th>

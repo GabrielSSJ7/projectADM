@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use App\Entrada;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
@@ -12,14 +13,18 @@ class StockController extends Controller
     //
     public function SellIndex()
     {
+        $user = Auth::guard('custom')->id();
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-        date_default_timezone_set('America/Sao_Paulo');
+        //date_default_timezone_set('America/Sao_Paulo');
+
+
 
         $table = DB::table('saida')->select('nome', 'saida.created_at as data', 'saida.qtde as quantidade'
             , 'stock.qtde as qtde_atual', 'saida.qtde_old')
             ->join('stock', 'saida.cod_esto', '=', 'stock.cod_prod')
             ->join('product', 'stock.cod_esto', '=', 'product.cod')
             ->join('user', 'product.cod_user', '=', 'user.id')
+            ->where('product.cod_user', '=', $user)
             ->orderBy('data', 'desc')->get();
 
         return view('stock.sell', ['dados' => $table]);
@@ -27,6 +32,7 @@ class StockController extends Controller
 
     public function EnterIndex()
     {
+        $user = Auth::guard('custom')->id();
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
@@ -35,6 +41,7 @@ class StockController extends Controller
             ->join('stock', 'entrada.cod_esto', '=', 'stock.cod_prod')
             ->join('product', 'stock.cod_esto', '=', 'product.cod')
             ->join('user', 'product.cod_user', '=', 'user.id')
+            ->where('product.cod_user', '=', $user)
             ->orderBy('data')->get();
 
         return view('stock.enter', ['dados' => $table]);
@@ -42,12 +49,15 @@ class StockController extends Controller
 
     public function getProduct(Request $request)
     {
+        $user = Auth::guard('custom')->id();
         //Código vindo do formulário
         $cod = $request->get('cod');
         //Buscando produto no banco baseado em seu código
         $response = DB::table('product')
             ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
-            ->where("cod", $cod)->get();
+            ->where("cod", $cod)
+            ->where('product.cod_user', '=', $user)
+            ->get();
 
         //Convertendo a resposta JSON
         $response = json_decode($response);
@@ -77,8 +87,6 @@ class StockController extends Controller
         $entrada->cod_esto = $request->cod_esto;
         $entrada->qtde = $request->qtde;
 
-        //Salvando dados no banco de dados
-        $entrada->save();
 
         //Buscando o produto no estoque através do código do estoque
         $stock = DB::table('stock')->where('cod_esto', $entrada->cod_esto)->get();
@@ -86,6 +94,11 @@ class StockController extends Controller
         //dd($stock->first()->qtde);
 
         $finalQtde = $stock->first()->qtde + $entrada->qtde;
+
+        $entrada->qtde_old = $stock->first()->qtde;
+
+        //Salvando dados no banco de dados
+        $entrada->save();
 
         DB::table('stock')->where('cod_esto', $entrada->cod_esto)->update(["qtde" => $finalQtde]);
 
@@ -135,7 +148,7 @@ class StockController extends Controller
           return  var_dump($finalQtde);
         }*/
 
-         if ($finalQtde > 0) {
+         if ($finalQtde >= 0) {
              //Salvando dados no banco de dados na tabela SAIDA
              $saida->save();
 
