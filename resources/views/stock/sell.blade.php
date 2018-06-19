@@ -3,7 +3,7 @@
 @section('content')
 
 
-    <div class="card formEntradaSaida" >
+    <div class="card formEntradaSaida">
         <div class="card-header">
             <strong>Saída </strong>
         </div>
@@ -33,46 +33,50 @@
                     </div>
                 </div>
 
-                    @if (session('status'))
-                        <p style="float:left; color:#4e555b;padding: 2% 1%;
+                @if (session('status'))
+                    <p style="float:left; color:#4e555b;padding: 2% 1%;
                         background-color: #abdde5;margin-top: 1%;">{{ session('status')}}</p>
-                    @endif
-                    <button style="margin-top: 2%;float: right; " type="submit" class="btn btn-outline-success">Finalizar
-                    </button>
+                @endif
+                <button style="margin-top: 2%;float: right; " type="submit" class="btn btn-outline-success">Finalizar
+                </button>
 
             </form>
         </div>
     </div>
 
-    <style>th{
+    <style>th {
             text-align: center;
         }</style>
 
-    <div class="col-sm-12" style="margin: 0 auto">
-        <table class="table table-dark table-hover table-responsive">
+    <div class="table-responsive">
+        <table style="width:80%;margin: 0 auto" class="table table-sm table-dark table-hover table-bordered">
             <thead>
             <tr>
                 <th>Produto</th>
                 <th>Data</th>
                 <th>Qtde</th>
-                <th>Qtde na data</th>
-                <th>Qtde Atual</th>
+                <th>Estoq/data</th>
+                <th>Estoq Atual</th>
+                <th>Valor</th>
             </tr>
             </thead>
             <tbody>
             @foreach($dados as $dado)
                 <tr>
                     {{--{{strftime('%A, %d de %B de %Y - %H:%mhrs', strtotime($dado->created_at))}}--}}
-                    <th>{{$dado->nome}}</th>
-                    <th>{{trim(strftime("%d de %B de %Y às %H:%Mhrs",strtotime($dado->data)))}}</th>
-                    <th>{{$dado->quantidade}}</th>
-                    <th>{{$dado->qtde_old}}</th>
-                    <th>{{$dado->qtde_atual}}</th>
+                    <td scope="row">{{$dado->nome}}</td>
+                    <td>{{trim(strftime("%d de %B de %Y às %H:%Mhrs",strtotime($dado->data)))}}</td>
+                    <td>{{$dado->quantidade}}</td>
+                    <td>{{$dado->qtde_old}}</td>
+                    <td>{{$dado->qtde_atual}}</td>
+                    <td><?php $preco = $dado->quantidade * $dado->preco; echo $preco?></td>
                 </tr>
             @endforeach
             </tbody>
         </table>
     </div>
+
+
 
     @if ($errors->any())
         <div class="alert alert-danger">

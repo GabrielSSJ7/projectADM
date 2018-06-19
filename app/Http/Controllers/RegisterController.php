@@ -34,7 +34,7 @@ class RegisterController extends Controller
         $admin->lvl_ac = 1;
 
         if ($admin->save()) {
-            return redirect()->route('login')->with(["status"=>"Usuário cadastrado com sucesso"]);
+            return redirect()->route('logar')->with(["status"=>"Usuário cadastrado com sucesso"]);
         }
 
         return redirect()->route('login')->withErrors(["status"=>"Não foi possível cadastrar este usuário"]);

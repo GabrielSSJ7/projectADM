@@ -20,7 +20,7 @@ class StockController extends Controller
 
 
         $table = DB::table('saida')->select('nome', 'saida.created_at as data', 'saida.qtde as quantidade'
-            , 'stock.qtde as qtde_atual', 'saida.qtde_old')
+            , 'stock.qtde as qtde_atual', 'saida.qtde_old', 'preco')
             ->join('stock', 'saida.cod_esto', '=', 'stock.cod_prod')
             ->join('product', 'stock.cod_esto', '=', 'product.cod')
             ->join('user', 'product.cod_user', '=', 'user.id')
@@ -37,7 +37,7 @@ class StockController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
 
         $table = DB::table('entrada')->select('nome', 'entrada.created_at as data', 'entrada.qtde as quantidade',
-            'stock.qtde as qtde_atual', 'entrada.qtde_old')
+            'stock.qtde as qtde_atual', 'entrada.qtde_old','preco')
             ->join('stock', 'entrada.cod_esto', '=', 'stock.cod_prod')
             ->join('product', 'stock.cod_esto', '=', 'product.cod')
             ->join('user', 'product.cod_user', '=', 'user.id')
@@ -61,6 +61,7 @@ class StockController extends Controller
 
         //Convertendo a resposta JSON
         $response = json_decode($response);
+
         if (!empty($response))
             return response()->json([$response, ["status" => "ok"]]);
         else

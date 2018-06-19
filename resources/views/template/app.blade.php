@@ -53,9 +53,19 @@
 
     @if(\Illuminate\Support\Facades\Auth::guard('custom')->check())
             <ul class="navbar-nav justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route("deslogar")}}" style="cursor: pointer">Logout</a>
-                </li>
+
+
+                <div class="dropdown">
+                    <li class="nav-item" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="cursor: pointer">
+                        <a class="nav-link dropdown-toggle">{{\Illuminate\Support\Facades\Auth::guard('custom')->user()->name}}</a>
+                    </li>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-item" href="{{route("deslogar")}}" style="cursor: pointer">Logout</a>
+                        </li>
+                    </div>
+                </div>
             </ul>
     @endif
 
