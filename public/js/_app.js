@@ -1,6 +1,6 @@
 $(document).ready(function (e) {
 
-    $("#nav-add-produto").on('click', function () {
+    $(".delete-produto-fornecedor").on('click', function () {
         $.ajax({
             url: "getforn",
             dataType: 'html',
@@ -8,10 +8,7 @@ $(document).ready(function (e) {
             data: {_token: $("#token").val()},
             success: function (msg) {
                 var listjson = JSON.parse(msg);
-                var x = 0
-                for (x = 0; x < listjson.length; x++) {
-                    $("#optionsForn").html("<options>"+listjson[x].nome+"</options>");
-                }
+                console.log(listjson[0]);
             },
             error: function (msg) {
                 $(".error").html(msg['responseText']);

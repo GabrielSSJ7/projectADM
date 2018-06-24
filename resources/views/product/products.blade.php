@@ -42,7 +42,7 @@
                 </div>
 
             @endforeach
-            <div class="col-sm-4" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">
+            <div class="col-sm-4 nav-add-produto" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">
                 <div class="card" style="margin: 2% auto;">
                     <div class="card-body" style="margin: 20% auto">
                         <h5 class="card-title" style="text-align: center; ">Adicionar produto</h5>

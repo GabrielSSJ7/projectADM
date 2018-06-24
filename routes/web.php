@@ -33,6 +33,7 @@ name('view.produtos')->middleware('auth:custom');
 Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"])->name('view.editar.produto')->middleware('auth:custom');
 Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"])->name('editar.produto');
 Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"])->name('criar.produto');
+Route::post('/deleteproduct', ["uses" => "Product\ProductController@DeleteProduct"])->name('delete.produto');
 Route::get('/getforn', ["uses" => "Fornecedor\FornecedorController@getFornForProduct"])->name('get.fornecedor')->middleware('auth:custom');
 
 

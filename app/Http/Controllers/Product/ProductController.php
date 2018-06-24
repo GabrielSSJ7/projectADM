@@ -40,18 +40,36 @@ class ProductController extends Controller
 
             return redirect('myproducts');
         } catch (\Exception $e) {
-            $e->getMessage();
+           return $e->getMessage();
         }
+    }
+
+    public function DeleteProduct(Request $request){
+
     }
 
     public function CreateProduct(Request $request)
     {
 
-       // dd(Auth::guard('custom')->id());
+         //dd($request->fornecedor);
+
+        $rules = [
+            'nome' => 'required',
+            'preco' => 'required|numeric',
+            'fornecedor' => 'required'
+        ];
+
+        $mensagens = [
+            'required' => 'O campo :attribute é necessário',
+            'numeric' => 'O campo :attribute deve conter apenas números'
+            ];
+
+        $this->validate($request, $rules, $mensagens);
 
         $Product = new \App\Produto;
         $Product->nome = $request->nome;
         $Product->preco = $request->preco;
+        $Product->cod_forn = $request->fornecedor;
         $Product->cod_user = Auth::guard('custom')->id();
         $Product->save();
 

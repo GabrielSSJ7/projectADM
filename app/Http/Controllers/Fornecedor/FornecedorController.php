@@ -23,7 +23,9 @@ class FornecedorController extends Controller
 
      public function editFornecedoresIndex($id){
 
-         $fornecedor = DB::table('fornecedor')->where('fornecedor.cod_forn', '=', $id)->get();
+         $fornecedor = DB::table('fornecedor')->select('product.nome as pnome','fornecedor.nome as fnome',
+             'product.preco')->join('product', 'fornecedor.cod_forn', '=',
+         'product.cod_forn')->where('fornecedor.cod_forn', '=', $id)->get();
 
          //dd($fornecedor);
 

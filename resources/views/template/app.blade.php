@@ -6,9 +6,40 @@
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="{{asset("css/app_blade.css")}}" rel="stylesheet"> </link>
+    <link href="{{asset("css/app_blade.css")}}" rel="stylesheet">
+    </link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="{{asset("js/_app.js")}}"></script>
+    <script src="{{asset('js/_app.js')}}"></script>
+    @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
+    <script >
+        $(document).ready(function () {
+            $.ajax({
+                url: "getforn",
+                dataType: 'html',
+                type: 'get',
+                data: {_token: $("#token").val()},
+                success: function (msg) {
+                    var listjson = JSON.parse(msg);
+                    console.log(listjson[0]);
+                    var x = 0;
+                    var select = document.getElementById('inputGroupSelect01');
+                    //select.html('');
+
+                    for (x = 0; x < listjson.length; x++) {
+                        var opt = document.createElement('option');
+                        opt.value = listjson[x].cod_forn;
+                        opt.innerHTML = listjson[x].nome;
+                        select.appendChild(opt);
+                        //$("#inputGroupSelect01").append("<options value="+ listjson[x].nome +">"+listjson[x].nome+"</options>");
+                    }
+                },
+                error: function (msg) {
+                    $(".error").html(msg['responseText']);
+                }
+            });
+        });
+    </script>
+    @endif
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,7 +52,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('painel.principal')}}">Inicio <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('painel.principal')}}">Inicio <span
+                        class="sr-only">(current)</span></a>
             </li>
             @if(\Illuminate\Support\Facades\Auth::check())
                 <li class="nav-item ">
@@ -34,7 +66,7 @@
                     <a class="nav-link" href="{{route('view.entrada.produto')}}">Entrada</a>
                 </li>
         </ul>
-            @else
+        @else
         </ul>
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item">
@@ -46,13 +78,14 @@
         @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
-                    <a id="nav-add-produto" class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar
+                    <a  class="nav-link nav-add-produto" style="cursor: pointer" data-toggle="modal"
+                       data-target="#exampleModalCenter">Adicionar
                         Produto</a>
                 </li>
             </ul>
-    @endif
+        @endif
 
-    @if(\Illuminate\Support\Facades\Auth::guard('custom')->check())
+        @if(\Illuminate\Support\Facades\Auth::guard('custom')->check())
             <ul class="navbar-nav justify-content-end">
 
 
@@ -77,6 +110,19 @@
     </div>
 </nav>
 
+@if ($errors->any())
+    <div class="container">
+        <div class="alert alert-danger" style="margin-top: 1%;">
+            <h3>Ops:</h3>
+            <ol>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ol>
+        </div>
+    </div>
+@endif
+
 
 <div class="container">
     @yield('content')
@@ -100,11 +146,9 @@
                         <label for="">Nome:</label>
                         <input type="text" class="form-control" name="nome">
                     </div>
-                    <div class="form-group">
-                        <select class="custom-select" id="inputGroupSelect01">
-                            <option selected>Escolha um fornecedor...</option>
-                            <div id="optionsForn"></div>
-
+                    <div class="form-group" id="div-select-fornecedor">
+                        <select class="custom-select" id="inputGroupSelect01" name="fornecedor">
+                            <option disabled selected>Escolha um fornecedor...</option>
                         </select>
                     </div>
                     <div class="row form-group">

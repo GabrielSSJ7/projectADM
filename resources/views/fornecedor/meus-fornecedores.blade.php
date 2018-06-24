@@ -22,7 +22,7 @@
         <div class="row">
             @foreach($fornecedores as $fornecedor)
 
-                <div  class="card col-sm-4" style=" cursor: pointer; margin: 0 10px;">
+                <div  class="card col-sm-3" style=" cursor: pointer; margin: 0 10px;">
                     <div class="card-body">
                         <h5><strong>Fornecedor:</strong> {{$fornecedor->nome}}</h5>
                         <a href="{{url("/$fornecedor->cod_forn/editfornecedor")}}"><i class="material-icons"
