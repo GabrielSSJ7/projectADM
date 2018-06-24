@@ -51,6 +51,13 @@ Route::post('/sellproduct', ["uses" => "Stock\StockController@sellProduct"])->
 name('saida.produto');
 Route::get('/registroEntrada', ['uses' => "Stock\StockController@registroEntrada"])->name("registro.entrada");
 
+/*=====
+ * Routes for Fornecedor
+ * ===
+ */
+Route::get('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@meusFornecedoresIndex"])->name('view.meus.fornecedores')->middleware('auth:custom');
+Route::post('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@addFornecedor"])->name('add.fornecedor')->middleware('auth:custom');
+Route::get('/{id}/editfornecedor', ['uses'=>"Fornecedor\FornecedorController@editFornecedoresIndex"])->middleware('auth:custom');
 
 Route::get('viewcadastro', ['uses'=> "RegisterController@index"])->name('view.user.cadastro');
 Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"])->name('user.cadastrar');

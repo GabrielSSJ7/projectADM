@@ -29,6 +29,13 @@
                     </a>
                 </div>
 
+                <div style="padding: 0 5px;" class="col-sm-2 ">
+                    <a href="{{route('view.meus.fornecedores')}}" class="btn btn-outline-dark dashboard-item">
+                        <img src="{{asset('images/delivery-truck.png')}}" class="img-fluid"><br>
+                        <span style="text-align: center">Fornecedores</span>
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>

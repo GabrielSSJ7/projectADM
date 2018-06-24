@@ -40,6 +40,16 @@
         </div>
     @endif
 
+    @foreach($errors->all() as $erro)
+        
+    <div class="alert alert-danger" style="margin-top: 1%; ">
+            <div class="row" style="text-align: center">
+                <h5 class="col-sm-12" style="color: grey">{{$erro}}</h5>
+            </div>
+        </div>
+
+    @endforeach
+
     <div class="card" id="card-login" style="">
         <div class="row" style="text-align: center">
             <h1 class="col-sm-12" style="color: #4e555b">Entrar</h1>

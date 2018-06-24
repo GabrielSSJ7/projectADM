@@ -80,7 +80,8 @@
 <div class="container">
     @yield('content')
 </div>
-<!-- Modal -->
+
+<!-- Modal Add Produto -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -107,6 +108,43 @@
                             <label for="">Qtde:</label>
                             <input type="text" class="form-control" name="qtde">
                         </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Finalizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Add Fornecedores -->
+<div class="modal fade" id="fornecedorModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Adicionar novo fornecedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route("add.fornecedor")}}" method="post">
+                <div class="modal-body">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label for="">Nome:</label>
+                        <input type="text" class="form-control" name="NomeFornecedor">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Endereço(opcional):</label>
+                        <input type="text" class="form-control" name="EnderecoFornecedor">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Telefone(opcional):</label>
+                        <input type="text" class="form-control" name="TelefoneFornecedor">
                     </div>
                 </div>
                 <div class="modal-footer">

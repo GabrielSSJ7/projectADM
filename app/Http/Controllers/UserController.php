@@ -12,12 +12,18 @@ class UserController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth:mylogin');
+        
     }
 
     public function home()
     {
-        return view('user.login');
+        if (Auth::guard('custom')->check()) {
+            # code...
+            return redirect()->route('painel.principal');
+        }else{
+            return view('user.login');    
+        }
+        
     }
 
     public function index()
@@ -46,7 +52,8 @@ class UserController extends Controller
             return redirect()->intended('/dashboard');
         }
         //Se não for autenticado, redirecionar para a página anterior.
-        return redirect()->back()->withInput(["email" => $request->email]);
+        return redirect()->back()->withInput(["email" => $request->email])
+        ->withErrors(array("message"=>"Usuário não encontrado"));
     }
 
     public function logout()
