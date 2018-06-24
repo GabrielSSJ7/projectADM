@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="{{asset("css/app_blade.css")}}" rel="stylesheet"> </link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{asset("js/_app.js")}}"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,7 +46,7 @@
         @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar
+                    <a id="nav-add-produto" class="nav-link" style="cursor: pointer" data-toggle="modal" data-target="#exampleModalCenter">Adicionar
                         Produto</a>
                 </li>
             </ul>
@@ -98,6 +99,13 @@
                     <div class="form-group">
                         <label for="">Nome:</label>
                         <input type="text" class="form-control" name="nome">
+                    </div>
+                    <div class="form-group">
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected>Escolha um fornecedor...</option>
+                            <div id="optionsForn"></div>
+
+                        </select>
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-6">

@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Fornecedor;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Auth;
-use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class FornecedorController extends Controller
 {
@@ -15,18 +16,18 @@ class FornecedorController extends Controller
 
     	$user = Auth::guard('custom')->id();
         $fornecedor = DB::table('fornecedor')->leftJoin('user', 'fornecedor.user_id', '=', 'user.id')
-            ->where('fornecedor.user_id', '=', $user)->get();        
+            ->where('fornecedor.user_id', '=', $user)->get();
 
     	return view('fornecedor.meus-fornecedores', ["fornecedores"=> $fornecedor]);
     }
 
-     public function editFornecedoresIndex(){
+     public function editFornecedoresIndex($id){
 
-    	$user = Auth::guard('custom')->id();
-        $fornecedor = DB::table('fornecedor')->leftJoin('user', 'fornecedor.user_id', '=', 'user.id')
-            ->where('fornecedor.user_id', '=', $user)->get();        
+         $fornecedor = DB::table('fornecedor')->where('fornecedor.cod_forn', '=', $id)->get();
 
-    	return view('fornecedor.meus-fornecedores', ["fornecedores"=> $fornecedor]);
+         //dd($fornecedor);
+
+         return view('fornecedor.edit-fornecedor', ["fornecedor"=> $fornecedor]);
     }
 
     public function addFornecedor(Request $request){
@@ -59,4 +60,14 @@ class FornecedorController extends Controller
 
     	return redirect()->route('add.fornecedor')->withErrors("Não foi possível cadastrar este fornecedor.");
     }
+
+
+    public function getFornForProduct(){
+        $user = Auth::guard('custom')->id();
+        $fornecedor = DB::table('fornecedor')->where('fornecedor.user_id', '=', $user)->get();
+
+
+        return response()->json($fornecedor);
+    }
 }
+

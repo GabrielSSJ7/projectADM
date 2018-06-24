@@ -21,7 +21,7 @@
     <div class="card-body">
         <div class="row">
             @foreach($fornecedores as $fornecedor)
-            
+
                 <div  class="card col-sm-4" style=" cursor: pointer; margin: 0 10px;">
                     <div class="card-body">
                         <h5><strong>Fornecedor:</strong> {{$fornecedor->nome}}</h5>
@@ -37,14 +37,14 @@
                         @endif
                     </div>
                 </div>
-                
+
             @endforeach
 
             <div  class="card col-sm-4" style=" cursor: pointer;" data-toggle="modal" data-target="#fornecedorModal">
               <div class="card-body">
-                    <a href="{{route('logar')}}"><h5 style="text-align: center;margin-top:30%;">Adicionar Fornecedor</h5></a>
+                    <h5>Adicionar Fornecedor</h5>
               </div>
-              
+
             </div>
         </div>
     </div>
