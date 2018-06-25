@@ -44,8 +44,17 @@ class ProductController extends Controller
         }
     }
 
-    public function DeleteProduct(Request $request){
+    public function DeleteProduct($id){
 
+//        if (DB::table('product')->where('cod', '=', $id)->delete())
+//            return response()->json(['status' => 1]);
+//        else
+//            return response()->json(['status'=> 0]);
+
+        if (DB::table('product')->where('cod', '=', $id)->delete())
+            return redirect()->back();
+        else
+            return redirect()->back();
     }
 
     public function CreateProduct(Request $request)
@@ -56,6 +65,7 @@ class ProductController extends Controller
         $rules = [
             'nome' => 'required',
             'preco' => 'required|numeric',
+            'PrecoCompra' => 'required|numeric',
             'fornecedor' => 'required'
         ];
 
@@ -69,6 +79,7 @@ class ProductController extends Controller
         $Product = new \App\Produto;
         $Product->nome = $request->nome;
         $Product->preco = $request->preco;
+        $Product->preco_fornecedor = $request->PrecoCompra;
         $Product->cod_forn = $request->fornecedor;
         $Product->cod_user = Auth::guard('custom')->id();
         $Product->save();

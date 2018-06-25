@@ -14,7 +14,7 @@
                                                                                style="float:right"><img
                                         src="{{asset('images/baseline_edit_black_18dp.png')}}">
                                 </i></a>
-                            <p class="card-text"><strong>Preço: </strong>R$<?php
+                            <p class="card-text"><strong>Preço final: </strong>R$<?php
                                 //Vendo se possui ponto, se possuir indica que há números flutuantes
                                 $index = strrpos($product->preco, ".");
                                 if (isset($index) && !empty($index)) {

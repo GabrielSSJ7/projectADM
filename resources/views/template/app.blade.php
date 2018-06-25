@@ -152,11 +152,15 @@
                         </select>
                     </div>
                     <div class="row form-group">
-                        <div class="col-sm-6">
-                            <label for="">Preço:</label>
+                        <div class="col-sm-4">
+                            <label for="">Preço final:</label>
                             <input type="text" class="form-control" name="preco">
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
+                            <label for="">Preço compra:</label>
+                            <input type="text" class="form-control" name="PrecoCompra">
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">Qtde:</label>
                             <input type="text" class="form-control" name="qtde">
                         </div>

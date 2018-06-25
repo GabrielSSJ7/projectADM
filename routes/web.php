@@ -33,7 +33,7 @@ name('view.produtos')->middleware('auth:custom');
 Route::get('/{id}/editproduct', ["uses" => "Product\ProductController@edit"])->name('view.editar.produto')->middleware('auth:custom');
 Route::post('/editproduct', ["uses" => "Product\ProductController@EditProduct"])->name('editar.produto');
 Route::post('/createproduct', ["uses" => "Product\ProductController@CreateProduct"])->name('criar.produto');
-Route::post('/deleteproduct', ["uses" => "Product\ProductController@DeleteProduct"])->name('delete.produto');
+Route::get('/{id}/deleteproduct', ["uses" => "Product\ProductController@DeleteProduct"])->name('delete.produto');
 Route::get('/getforn', ["uses" => "Fornecedor\FornecedorController@getFornForProduct"])->name('get.fornecedor')->middleware('auth:custom');
 
 
@@ -59,7 +59,8 @@ Route::get('/registroEntrada', ['uses' => "Stock\StockController@registroEntrada
  */
 Route::get('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@meusFornecedoresIndex"])->name('view.meus.fornecedores')->middleware('auth:custom');
 Route::post('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@addFornecedor"])->name('add.fornecedor')->middleware('auth:custom');
-Route::get('/{id}/editfornecedor', ['uses'=>"Fornecedor\FornecedorController@editFornecedoresIndex"])->middleware('auth:custom');
+Route::get('{id}/editfornecedor', ['uses'=>"Fornecedor\FornecedorController@editFornecedoresIndex"])->middleware('auth:custom')
+->name('edit.fornecedor');
 
 Route::get('viewcadastro', ['uses'=> "RegisterController@index"])->name('view.user.cadastro');
 Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"])->name('user.cadastrar');

@@ -20,6 +20,7 @@ class CreateProductTable extends Migration
             $table->string('nome');
             $table->string('tp_uni')->nullable();
             $table->double('preco');
+            $table->double('preco_fornecedor');
             $table->foreign('cod_user')->references('id')->on('user')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('cod_forn')->references('cod_forn')->on('fornecedor')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
