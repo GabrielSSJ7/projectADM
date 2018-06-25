@@ -11,34 +11,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{asset('js/_app.js')}}"></script>
     @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
-    <script >
-        $(document).ready(function () {
-            $.ajax({
-                url: "getforn",
-                dataType: 'html',
-                type: 'get',
-                data: {_token: $("#token").val()},
-                success: function (msg) {
-                    var listjson = JSON.parse(msg);
-                    console.log(listjson[0]);
-                    var x = 0;
-                    var select = document.getElementById('inputGroupSelect01');
-                    //select.html('');
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "getforn",
+                    dataType: 'html',
+                    type: 'get',
+                    data: {_token: $("#token").val()},
+                    success: function (msg) {
+                        var listjson = JSON.parse(msg);
+                        console.log(listjson[0]);
+                        var x = 0;
+                        var select = document.getElementById('inputGroupSelect01');
+                        //select.html('');
 
-                    for (x = 0; x < listjson.length; x++) {
-                        var opt = document.createElement('option');
-                        opt.value = listjson[x].cod_forn;
-                        opt.innerHTML = listjson[x].nome;
-                        select.appendChild(opt);
-                        //$("#inputGroupSelect01").append("<options value="+ listjson[x].nome +">"+listjson[x].nome+"</options>");
+                        for (x = 0; x < listjson.length; x++) {
+                            var opt = document.createElement('option');
+                            opt.value = listjson[x].cod_forn;
+                            opt.innerHTML = listjson[x].nome;
+                            select.appendChild(opt);
+                            //$("#inputGroupSelect01").append("<options value="+ listjson[x].nome +">"+listjson[x].nome+"</options>");
+                        }
+                    },
+                    error: function (msg) {
+                        $(".error").html(msg['responseText']);
                     }
-                },
-                error: function (msg) {
-                    $(".error").html(msg['responseText']);
-                }
+                });
             });
-        });
-    </script>
+        </script>
     @endif
 </head>
 <body>
@@ -78,7 +78,7 @@
         @if(\Illuminate\Support\Facades\Request::routeIs('view.produtos'))
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item">
-                    <a  class="nav-link nav-add-produto" style="cursor: pointer" data-toggle="modal"
+                    <a class="nav-link nav-add-produto" style="cursor: pointer" data-toggle="modal"
                        data-target="#exampleModalCenter">Adicionar
                         Produto</a>
                 </li>

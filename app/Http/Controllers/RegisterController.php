@@ -34,7 +34,14 @@ class RegisterController extends Controller
         $admin->lvl_ac = 1;
 
         if ($admin->save()) {
+
+            $caixa = new \App\Caixa;
+
+            $caixa->user_id = $admin->id;
+            $caixa->saldo = 0;
+            $caixa->save();
             return redirect()->route('logar')->with(["status"=>"Usuário cadastrado com sucesso"]);
+
         }
 
         return redirect()->route('login')->withErrors(["status"=>"Não foi possível cadastrar este usuário"]);

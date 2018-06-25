@@ -111,10 +111,16 @@ class StockController extends Controller
     public function sellProduct(Request $request)
     {
         //Definindo regras do formulário
-        $rules = ['qtde' => 'required'];
+        $rules = [
+            'qtde' => 'required'
+        ];
 
         //Definindo mensagens de erro caso formulário seja inválido
-        $mensagens = ['required' => 'O campo :attribute é necessário'];
+        $mensagens = [
+            'required' => 'O campo :attribute é necessário'
+        ];
+
+        dd($request);
 
         //Validando formulário
         $this->validate($request, $rules, $mensagens);
@@ -155,6 +161,7 @@ class StockController extends Controller
 
              //Atualizando a quantidade do produto no banco de dados
              DB::table('stock')->where('cod_esto', $saida->cod_esto)->update(["qtde" => $finalQtde]);
+
 
 
              //Retornando status da venda

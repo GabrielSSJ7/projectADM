@@ -18,9 +18,7 @@ Route::post('/logar', ["uses" => "UserController@Login"])->name('login');
 Route::get('/', ["uses" => "UserController@home"])->name('logar');
 Route::get('/logout', ["uses" => "UserController@logout"])->name('deslogar');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('painel.principal')->middleware('auth:custom');
+Route::get('/dashboard', ["uses"=>"Caixa\CaixaController@dashboardIndex"])->name('painel.principal')->middleware('auth:custom');
 
 /*=====
  *
