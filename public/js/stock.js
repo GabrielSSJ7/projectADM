@@ -68,7 +68,7 @@ $(document).ready(function (e) {
 
                 if (listjson[1].status == "ok") {
                     $("#nome").val(listjson[0][0].nome);
-                    $("#preco").val(listjson[0][0].preco);
+                    $("#preco").val(listjson[0][0].preco_fornecedor);
                     $("#cod_esto").val(listjson[0][0].cod_esto);
                     $("#qtde").prop('disabled', false);
                 }else {

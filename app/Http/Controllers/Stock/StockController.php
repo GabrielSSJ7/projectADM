@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Stock;
 
+use App\Caixa;
 use App\Entrada;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,6 @@ class StockController extends Controller
         $user = Auth::guard('custom')->id();
         setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         //date_default_timezone_set('America/Sao_Paulo');
-
 
 
         $table = DB::table('saida')->select('nome', 'saida.created_at as data', 'saida.qtde as quantidade'
@@ -37,7 +37,7 @@ class StockController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
 
         $table = DB::table('entrada')->select('nome', 'entrada.created_at as data', 'entrada.qtde as quantidade',
-            'stock.qtde as qtde_atual', 'entrada.qtde_old','preco')
+            'stock.qtde as qtde_atual', 'entrada.qtde_old', 'preco')
             ->join('stock', 'entrada.cod_esto', '=', 'stock.cod_prod')
             ->join('product', 'stock.cod_esto', '=', 'product.cod')
             ->join('user', 'product.cod_user', '=', 'user.id')
@@ -92,19 +92,30 @@ class StockController extends Controller
         //Buscando o produto no estoque através do código do estoque
         $stock = DB::table('stock')->where('cod_esto', $entrada->cod_esto)->get();
 
-        //dd($stock->first()->qtde);
+        $id = Auth::guard('custom')->id();
+        $saldo = $request->qtde * $request->preco;
 
-        $finalQtde = $stock->first()->qtde + $entrada->qtde;
+        $saldo_table = DB::table('caixa')->where('user_id', '=', $id)->get()->first()->saldo;
 
-        $entrada->qtde_old = $stock->first()->qtde;
+        $saldo_final = $saldo_table - $saldo;
 
-        //Salvando dados no banco de dados
-        $entrada->save();
+        if ($saldo_final >= 0) {
 
-        DB::table('stock')->where('cod_esto', $entrada->cod_esto)->update(["qtde" => $finalQtde]);
+            $finalQtde = $stock->first()->qtde + $entrada->qtde;
+            $entrada->qtde_old = $stock->first()->qtde;
 
-        //Retornando status da venda
-        return redirect()->route('view.entrada.produto')->with(['status' => 'Sucesso']);
+            //Salvando dados no banco de dados
+            $entrada->save();
+
+            DB::table('caixa')->where('user_id', $id)->update(["saldo" => $saldo_final]);
+            DB::table('stock')->where('cod_esto', $entrada->cod_esto)->update(["qtde" => $finalQtde]);
+
+            //Retornando status da venda
+            return redirect()->route('view.entrada.produto')->with(['status' => 'Sucesso']);
+        } else {
+            return redirect()->route('view.entrada.produto')->with(['status' => 'Você não tem dinheiro para comprar']);
+        }
+
 
     }
 
@@ -120,7 +131,6 @@ class StockController extends Controller
             'required' => 'O campo :attribute é necessário'
         ];
 
-        dd($request);
 
         //Validando formulário
         $this->validate($request, $rules, $mensagens);
@@ -131,6 +141,7 @@ class StockController extends Controller
         //Definindo os dados passados pela requisição no modelo
         $saida->cod_esto = $request->cod_esto;
         $saida->qtde = $request->qtde;
+
 
         //Buscando o produto no estoque através do código do estoque
         $stock = DB::table('stock')->where('cod_esto', $request->cod_esto)->get();
@@ -155,20 +166,28 @@ class StockController extends Controller
           return  var_dump($finalQtde);
         }*/
 
-         if ($finalQtde >= 0) {
-             //Salvando dados no banco de dados na tabela SAIDA
-             $saida->save();
+        if ($finalQtde >= 0) {
+            //Salvando dados no banco de dados na tabela SAIDA
+            $saida->save();
 
-             //Atualizando a quantidade do produto no banco de dados
-             DB::table('stock')->where('cod_esto', $saida->cod_esto)->update(["qtde" => $finalQtde]);
+            $id = Auth::guard('custom')->id();
+            $saldo = $request->qtde * $request->preco;
+
+            $saldo_table = DB::table('caixa')->where('user_id', '=', $id)->get()->first()->saldo;
+
+            $saldo_final = $saldo + $saldo_table;
+
+            DB::table('caixa')->where('user_id', $id)->update(["saldo" => $saldo_final]);
+
+            //Atualizando a quantidade do produto no banco de dados
+            DB::table('stock')->where('cod_esto', $saida->cod_esto)->update(["qtde" => $finalQtde]);
 
 
+            //Retornando status da venda
+            return redirect()->route('view.saida.produto')->with(['status' => 'Sucesso']);
+        }
 
-             //Retornando status da venda
-             return redirect()->route('view.saida.produto')->with(['status' => 'Sucesso']);
-         }
-
-        return redirect()->route('view.saida.produto')->with(['status' => 'Você não tem produto suficiente para vender. Qtde do produto: '.$stock->first()->qtde]);
+        return redirect()->route('view.saida.produto')->with(['status' => 'Você não tem produto suficiente para vender. Qtde do produto: ' . $stock->first()->qtde]);
     }
 
 

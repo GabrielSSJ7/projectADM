@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card formEntradaSaida"  style="">
+    <div class="card formEntradaSaida" style="">
         <div class="card-header">
             <strong>Entrada</strong>
         </div>
@@ -18,7 +18,12 @@
 
                     <div class="col-sm-6">
                         <label for="address">Nome:</label>
-                        <input type="address" class="form-control" id="nome" name="nome" disabled>
+                        <input type="address" class="form-control" id="nome" name="nome" readonly>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="qtde">Preço(R$):</label>
+                        <input type="number" class="form-control" id="preco" name="preco" readonly>
                     </div>
 
                     <div class="col-sm-2">
@@ -26,11 +31,12 @@
                         <input type="number" class="form-control" id="qtde" name="qtde" disabled>
                     </div>
 
-                    <div class="col-sm-2">
-                        <label for="qtde">Preço(R$):</label>
-                        <input type="number" class="form-control" id="preco" name="preco" disabled>
-                    </div>
                 </div>
+                @if (session('status'))
+                    <div class="alert alert-danger" style="float: left;margin-top: 2%;">
+                        <p>{{ session('status')}}</p>
+                    </div>
+                @endif
 
                 <button style="margin-top: 2%;float: right;" type="submit" class="btn btn-outline-success">Finalizar
                 </button>
@@ -38,7 +44,7 @@
         </div>
     </div>
 
-    <style>th{
+    <style>th {
             text-align: center;
         }</style>
 
@@ -52,7 +58,7 @@
                 <th>Qtde</th>
                 <th>Estoq/data</th>
                 <th>Estoq Atual</th>
-               git
+
             </tr>
             </thead>
             <tbody>
@@ -84,6 +90,7 @@
             </ul>
         </div>
     @endif
+
     <div class="error">
 
     </div>

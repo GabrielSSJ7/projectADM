@@ -15,8 +15,11 @@ class ProductController extends Controller
     public function index()
     {
         $user = Auth::guard('custom')->id();
-        $produtos = DB::table('product')->leftJoin('user', 'product.cod_user', '=', 'user.id')
+        $produtos = DB::table('product')->select('product.nome as pnome', 'product.cod', 'product.preco',
+            'product.preco_fornecedor','stock.qtde' ,'fornecedor.nome as fnome')
+            ->leftJoin('user', 'product.cod_user', '=', 'user.id')
             ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
+            ->leftJoin('fornecedor', 'product.cod_user', '=', 'fornecedor.user_id')
             ->where('product.cod_user', '=', $user)->get();
         //dd($produtos);
         return view('product.products', ['products' => $produtos]);

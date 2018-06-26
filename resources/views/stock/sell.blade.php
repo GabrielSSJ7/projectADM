@@ -18,8 +18,13 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="address">Nome:</label>
-                        <input type="address" class="form-control" id="nome" name="nome" disabled>
+                        <label for="nome">Nome:</label>
+                        <input  class="form-control" id="nome" name="nome" readonly>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <label for="preco">Preço(R$):</label>
+                        <input  class="form-control" id="preco" name="preco" readonly>
                     </div>
 
                     <div class="col-sm-2">
@@ -27,10 +32,7 @@
                         <input type="number" class="form-control" id="qtde" name="qtde" disabled>
                     </div>
 
-                    <div class="col-sm-2">
-                        <label for="qtde">Preço(R$):</label>
-                        <input type="number" class="form-control" id="preco" name="preco" disabled>
-                    </div>
+
                 </div>
 
                 @if (session('status'))
@@ -69,7 +71,7 @@
                     <td>{{$dado->quantidade}}</td>
                     <td>{{$dado->qtde_old}}</td>
                     <td>{{$dado->qtde_atual}}</td>
-                    <td><?php $preco = $dado->quantidade * $dado->preco; echo $preco?></td>
+                    <td><?php $preco = $dado->quantidade * $dado->preco; echo "R$". $preco?></td>
                 </tr>
             @endforeach
             </tbody>
