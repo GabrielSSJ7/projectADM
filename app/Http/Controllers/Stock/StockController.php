@@ -173,6 +173,8 @@ class StockController extends Controller
             $id = Auth::guard('custom')->id();
             $saldo = $request->qtde * $request->preco;
 
+            //dd($id);
+
             $saldo_table = DB::table('caixa')->where('user_id', '=', $id)->get()->first()->saldo;
 
             $saldo_final = $saldo + $saldo_table;

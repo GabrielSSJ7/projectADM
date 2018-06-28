@@ -50,7 +50,7 @@
                     <h4 style="text-align: center">Caixa</h4>
                 </div>
                 <div class="card-body">
-                    <p style="font-size: 80%; text-align: center"><strong>Seu saldo:</strong> R${{$caixa->saldo}}</p>
+                    <p style="font-size: 80%; text-align: center"><strong>Seu saldo:</strong> R${{$caixa->first()->saldo}}</p>
                 </div>
             </div>
         </div>

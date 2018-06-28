@@ -19,7 +19,7 @@ class ProductController extends Controller
             'product.preco_fornecedor','stock.qtde' ,'fornecedor.nome as fnome')
             ->leftJoin('user', 'product.cod_user', '=', 'user.id')
             ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
-            ->leftJoin('fornecedor', 'product.cod_user', '=', 'fornecedor.user_id')
+            ->leftJoin('fornecedor', 'product.cod_forn', '=', 'fornecedor.cod_forn')
             ->where('product.cod_user', '=', $user)->get();
         //dd($produtos);
         return view('product.products', ['products' => $produtos]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Adm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,6 +27,7 @@ class RegisterController extends Controller
             'password' => 'required|min:6'
         ], $mensagens);
 
+
         $admin = new \App\Adm;
 
         $admin->name = $request->nome;
@@ -33,18 +35,38 @@ class RegisterController extends Controller
         $admin->password = Hash::make($request->password);
         $admin->lvl_ac = 1;
 
-        if ($admin->save()) {
 
-            $caixa = new \App\Caixa;
+        if (!$this->CheckDataIfExist($request->email, 'email')) {
+            if ($admin->save()) {
 
-            $caixa->user_id = $admin->id;
-            $caixa->saldo = 0;
-            $caixa->save();
-            return redirect()->route('logar')->with(["status"=>"Usuário cadastrado com sucesso"]);
+                $caixa = new \App\Caixa;
 
+                $caixa->user_id = $admin->id;
+                $caixa->saldo = 0;
+
+                $caixa->save();
+                return redirect()->route('logar')->with(["status" => "Usuário cadastrado com sucesso"]);
+
+            }
+
+            return redirect()->route('login')->withErrors(["status" => "Não foi possível cadastrar este usuário"]);
+        }
+        else{
+            return redirect()->back()->withErrors(["status" => "E-mail: ". $request->email. " já está em uso por outro usuário."])
+                ->withInput(['nome'=> $request->nome, 'email'=> $request->email]);
         }
 
-        return redirect()->route('login')->withErrors(["status"=>"Não foi possível cadastrar este usuário"]);
 
+    }
+
+
+    private function CheckDataIfExist($email, $column)
+    {
+        $adm = Adm::where($column, '=', $email)->count();
+
+        if ($adm >= 1)
+            return true;
+        else
+            return false;
     }
 }

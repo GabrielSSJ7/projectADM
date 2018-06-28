@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Caixa;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+use Auth;
 
 class CaixaController extends Controller
 {
@@ -12,9 +14,10 @@ class CaixaController extends Controller
     public function dashboardIndex()
     {
 
-        $caixa = \App\Caixa::all()->first();
+    	$id = Auth::guard('custom')->id();
 
-       // dd($caixa->first()->user_id);
+        $caixa = DB::table('caixa')->where('user_id', '=', $id)->get();
+        //dd($caixa->first()->saldo);
 
         return view('dashboard', ['caixa'=> $caixa]);
     }
