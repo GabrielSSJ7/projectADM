@@ -7,40 +7,51 @@
             <strong>Entrada</strong>
         </div>
         <div class="card-body ">
-            <form role="form" action="{{route("entrada.produto")}}" method="post">
-                <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
-                <input type="hidden" id="cod_esto" name="cod_esto">
+            <div class="container">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <label for="name">Código:</label>
-                        <input type="number" class="form-control" id="cod_entrada" name="cod">
-                    </div>
+                    <form role="form" action="{{route("entrada.produto")}}" method="post">
+                        <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
+                        <input type="hidden" id="cod_esto" name="cod_esto">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="name">Código:</label>
+                                <input type="number" class="form-control" id="cod_entrada" name="cod">
+                            </div>
 
-                    <div class="col-sm-6">
-                        <label for="address">Nome:</label>
-                        <input type="address" class="form-control" id="nome" name="nome" readonly>
-                    </div>
+                            <div class="col-sm-6">
+                                <label for="address">Nome:</label>
+                                <input type="address" class="form-control" id="nome" name="nome" readonly>
+                            </div>
 
-                    <div class="col-sm-2">
-                        <label for="qtde">Preço(R$):</label>
-                        <input type="number" class="form-control" id="preco" name="preco" readonly>
-                    </div>
+                            <div class="col-sm-2">
+                                <label for="qtde">Preço(R$):</label>
+                                <input type="number" class="form-control" id="preco" name="preco" readonly>
+                            </div>
 
-                    <div class="col-sm-2">
-                        <label for="qtde">Qtde:</label>
-                        <input type="number" class="form-control" id="qtde" name="qtde" disabled>
-                    </div>
+                            <div class="col-sm-2">
+                                <label for="qtde">Qtde:</label>
+                                <input type="number" class="form-control" id="qtde" name="qtde" disabled>
+                            </div>
 
+                        </div>
+                        @if (session('status'))
+                            <div class="alert alert-danger" style="float: left;margin-top: 2%;">
+                                <p>{{ session('status')}}</p>
+                            </div>
+                        @endif
+
+                        <button style="margin-top: 2%;float: right;" type="submit" class="btn btn-outline-success">
+                            Finalizar
+                        </button>
+                    </form>
                 </div>
-                @if (session('status'))
-                    <div class="alert alert-danger" style="float: left;margin-top: 2%;">
-                        <p>{{ session('status')}}</p>
-                    </div>
-                @endif
+                <div class="row">
+                    <div class="col-sm">
+                        <p><strong>Quantidade em estoque:</strong>    <span id="qtde_estoque"></span></p>
 
-                <button style="margin-top: 2%;float: right;" type="submit" class="btn btn-outline-success">Finalizar
-                </button>
-            </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

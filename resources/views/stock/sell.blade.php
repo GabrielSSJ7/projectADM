@@ -8,41 +8,53 @@
             <strong>Saída </strong>
         </div>
         <div class="card-body ">
-            <form role="form" action="{{route("saida.produto")}}" method="post">
-                <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
-                <input type="hidden" id="cod_esto" name="cod_esto">
+            <div class="container">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <label for="name">Código:</label>
-                        <input type="number" class="form-control" id="cod_saida" name="cod">
-                    </div>
+                    <form role="form" action="{{route("saida.produto")}}" method="post">
+                        <input type="hidden" value="{{csrf_token()}}" id="token" name="_token">
+                        <input type="hidden" id="cod_esto" name="cod_esto">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="name">Código:</label>
+                                <input type="number" class="form-control" id="cod_saida" name="cod">
+                            </div>
 
-                    <div class="col-sm-6">
-                        <label for="nome">Nome:</label>
-                        <input  class="form-control" id="nome" name="nome" readonly>
-                    </div>
+                            <div class="col-sm-6">
+                                <label for="nome">Nome:</label>
+                                <input class="form-control" id="nome" name="nome" readonly>
+                            </div>
 
-                    <div class="col-sm-2">
-                        <label for="preco">Preço(R$):</label>
-                        <input  class="form-control" id="preco" name="preco" readonly>
-                    </div>
+                            <div class="col-sm-2">
+                                <label for="preco">Preço(R$):</label>
+                                <input class="form-control" id="preco" name="preco" readonly>
+                            </div>
 
-                    <div class="col-sm-2">
-                        <label for="qtde">Qtde:</label>
-                        <input type="number" class="form-control" id="qtde" name="qtde" disabled>
-                    </div>
+                            <div class="col-sm-2">
+                                <label for="qtde">Qtde:</label>
+                                <input type="number" class="form-control" id="qtde" name="qtde" disabled>
+                            </div>
 
 
-                </div>
+                        </div>
 
-                @if (session('status'))
-                    <p style="float:left; color:#4e555b;padding: 2% 1%;
+                        @if (session('status'))
+                            <p style="float:left; color:#4e555b;padding: 2% 1%;
                         background-color: #abdde5;margin-top: 1%;">{{ session('status')}}</p>
-                @endif
-                <button style="margin-top: 2%;float: right; " type="submit" class="btn btn-outline-success">Finalizar
-                </button>
+                        @endif
+                        <button style="margin-top: 2%;float: right; " type="submit" class="btn btn-outline-success">
+                            Finalizar
+                        </button>
 
-            </form>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <p><strong>Quantidade em estoque:</strong>    <span id="qtde_estoque"></span></p>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -71,7 +83,7 @@
                     <td>{{$dado->quantidade}}</td>
                     <td>{{$dado->qtde_old}}</td>
                     <td>{{$dado->qtde_atual}}</td>
-                    <td><?php $preco = $dado->quantidade * $dado->preco; echo "R$". $preco?></td>
+                    <td><?php $preco = $dado->quantidade * $dado->preco; echo "R$" . $preco?></td>
                 </tr>
             @endforeach
             </tbody>

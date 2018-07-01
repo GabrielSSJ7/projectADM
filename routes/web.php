@@ -59,6 +59,7 @@ Route::get('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@meusFor
 Route::post('meusfornecedores', ['uses'=>"Fornecedor\FornecedorController@addFornecedor"])->name('add.fornecedor')->middleware('auth:custom');
 Route::get('{id}/editfornecedor', ['uses'=>"Fornecedor\FornecedorController@editFornecedoresIndex"])->middleware('auth:custom')
 ->name('edit.fornecedor');
+Route::post('editdatafornecedor', ['uses'=>"Fornecedor\FornecedorController@EditDataFornecedor"]);
 
 Route::get('viewcadastro', ['uses'=> "RegisterController@index"])->name('view.user.cadastro');
 Route::post('cadastrar', ["uses" => "RegisterController@cadastrar"])->name('user.cadastrar');

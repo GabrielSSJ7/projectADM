@@ -13,4 +13,7 @@ class produto extends Model
     ];
 
     protected $table = 'product';
+
+    public $incrementing = true;
+    protected $primaryKey = "cod";
 }

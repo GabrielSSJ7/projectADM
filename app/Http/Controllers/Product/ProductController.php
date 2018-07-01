@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $user = Auth::guard('custom')->id();
         $produtos = DB::table('product')->select('product.nome as pnome', 'product.cod', 'product.preco',
-            'product.preco_fornecedor','stock.qtde' ,'fornecedor.nome as fnome')
+            'product.preco_fornecedor', 'stock.qtde', 'fornecedor.nome as fnome')
             ->leftJoin('user', 'product.cod_user', '=', 'user.id')
             ->leftJoin('stock', 'product.cod', '=', 'stock.cod_prod')
             ->leftJoin('fornecedor', 'product.cod_forn', '=', 'fornecedor.cod_forn')
@@ -35,19 +35,34 @@ class ProductController extends Controller
 
     public function EditProduct(Request $request)
     {
-        try {
-            DB::table('product')->where('cod', $request->get('cod'))->update([
-                'nome' => $request->get('nome'),
-                'preco' => $request->get('preco')
-            ]);
 
-            return redirect('myproducts');
-        } catch (\Exception $e) {
-           return $e->getMessage();
-        }
+        $rules = [
+            'nome' => 'required',
+            'preco' => 'required|numeric',
+            'PrecoCompra' => 'required|numeric'
+        ];
+
+        $mensagens = [
+            'required' => 'O campo :attribute é necessário',
+            'numeric' => 'O campo :attribute deve conter apenas números'
+        ];
+
+        $this->validate($request, $rules, $mensagens);
+
+        $product = \App\produto::find($request->get('cod'));
+
+        $product->nome = $request->nome;
+        $product->preco = $request->preco;
+        $product->preco_fornecedor = $request->PrecoCompra;
+
+        if ($product->save())
+            return redirect()->back()->with(['status' => 'Produto atualizado']);
+        else
+            return redirect()->back();
     }
 
-    public function DeleteProduct($id){
+    public function DeleteProduct($id)
+    {
 
 //        if (DB::table('product')->where('cod', '=', $id)->delete())
 //            return response()->json(['status' => 1]);
@@ -63,7 +78,7 @@ class ProductController extends Controller
     public function CreateProduct(Request $request)
     {
 
-         //dd($request->fornecedor);
+        //dd($request->fornecedor);
 
         $rules = [
             'nome' => 'required',
@@ -75,7 +90,7 @@ class ProductController extends Controller
         $mensagens = [
             'required' => 'O campo :attribute é necessário',
             'numeric' => 'O campo :attribute deve conter apenas números'
-            ];
+        ];
 
         $this->validate($request, $rules, $mensagens);
 

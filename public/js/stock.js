@@ -16,6 +16,7 @@ $(document).ready(function (e) {
                     $("#nome").val(listjson[0][0].nome);
                     $("#preco").val(listjson[0][0].preco);
                     $("#cod_esto").val(listjson[0][0].cod_esto);
+                    $("#qtde_estoque").html(listjson[0][0].qtde);
                     if (listjson[0][0].qtde > 0) {
                         $("#qtde").prop('disabled', false);
                         $(".btn").prop('disabled', false);
@@ -70,6 +71,7 @@ $(document).ready(function (e) {
                     $("#nome").val(listjson[0][0].nome);
                     $("#preco").val(listjson[0][0].preco_fornecedor);
                     $("#cod_esto").val(listjson[0][0].cod_esto);
+                    $("#qtde_estoque").html(listjson[0][0].qtde);
                     $("#qtde").prop('disabled', false);
                 }else {
                     $("#nome").val('');

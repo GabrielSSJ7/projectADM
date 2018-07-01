@@ -13,4 +13,7 @@ class Fornecedor extends Model
     ];
 
     protected $table = 'fornecedor';
+
+    public $incrementing = false;
+    protected $primaryKey = "cod_forn";
 }
